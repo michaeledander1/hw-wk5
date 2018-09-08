@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import { base, sauce, toppings } from '../lib/pizzaIngredients'
 import { addIngredients } from '../actions/userPizza'
 import UserPizza from './UserPizza';
+import Checkout from './Checkout'
 
 class PizzaListContainer extends React.PureComponent {
   state = {
@@ -12,13 +13,14 @@ class PizzaListContainer extends React.PureComponent {
     toppingOne: '',
     toppingTwo: '',
     toppingThree: '',
-    totalCost: 0
+    totalCost: 0,
   }
 
   onChange = (event) => {
+    const subTotal = this.calculateTotalCost()
     this.setState({
       [event.target.name]: event.target.value,
-      totalCost: this.calculateTotalCost()
+      totalCost: subTotal
     })
   }    
     
@@ -29,8 +31,17 @@ class PizzaListContainer extends React.PureComponent {
     event.target.reset()
 
     const pizza = {...this.state}
-    
+    const subTotal = this.calculateTotalCost()
     this.props.addIngredients(pizza)
+
+    this.setState({
+        base: '',
+        sauce: '',
+        toppingOne: '',
+        toppingTwo: '',
+        toppingThree: '',
+        totalCost: subTotal
+    })
   }
 
   calculateBasePrice = (stateBase) => {
@@ -80,8 +91,12 @@ class PizzaListContainer extends React.PureComponent {
   }
 
   turboDroneCost = () => {
-      const subTotal =this.calculateTotalCost()
+      const subTotal = this.props.userPizza.totalCost
       return subTotal * 1.1
+  }
+
+  displayTurboDroneCost = () => {
+      this.turboDroneCost()
   }
 
   render() {
@@ -94,8 +109,10 @@ class PizzaListContainer extends React.PureComponent {
         onSubmit={this.onSubmit}
         state={this.state}/>
         <UserPizza calculateTotalCost={this.calculateTotalCost}
-        base={this.state.base}
-        userPizza={this.props.userPizza} />
+        base={this.state.base} />
+        <Checkout userPizza={this.props.userPizza}
+        turboDroneCost={this.turboDroneCost}
+        displayTurboDroneCost={this.displayTurboDroneCost}/>
       </div>
   )}
 }
