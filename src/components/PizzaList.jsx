@@ -45,8 +45,6 @@ export default function PizzaList (props){
           <li key={topping.id}>{topping.name}</li>)
           }
         </ul>
-        {/* {props.toppings.map(topping =>
-        <button key={topping.id} onClick={props.onChange} name={topping.name} value={topping.price}>{topping.name}</button>)} */}
         <label>
           <p>Pick your toppings</p>
           <select className = "topping-selector1" name="toppingOne" onChange={props.onChange}>

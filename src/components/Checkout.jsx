@@ -11,8 +11,8 @@ export default function Checkout (props){
         {props.userPizza.toppingOne}<br/> {props.userPizza.toppingTwo} <br/>{props.userPizza.toppingThree}
         <br/> and it will cost {props.userPizza.totalCost} </p>
         <p>For 10% more, would you like super fast drone delivery?</p>
-        <button onClick={props.turboDroneCost}>Turbo Drone</button>
-        <p>Subtotal: {props.displayTurboDroneCost()}</p>
+        <button onClick={props.displayTurboDroneCost}>Yes Please! Turbo Drone activation!</button>
+        <p>Subtotal with drone delivery: {props.total}</p>
         <p></p>
       </div>
   )} else {
