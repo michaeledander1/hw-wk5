@@ -28,15 +28,23 @@ class PizzaListContainer extends React.PureComponent {
 
 
   onSubmit = (event) => {
-    const subtotal = this.calculateTotalCost()  
     this.setState({
         base: '',
         sauce: '',
         toppingOne: '',
         toppingTwo: '',
-        toppingThree: '',
-        totalCost: subtotal
+        toppingThree: ''
     })
+    this.calculateTotalCost()
+    const subtotal = this.calculateTotalCost()  
+    this.setState({
+      base: '',
+      sauce: '',
+      toppingOne: '',
+      toppingTwo: '',
+      toppingThree: '',
+      totalCost: subtotal
+  })
     event.preventDefault()
     event.target.reset()
     const pizza = {...this.state}
@@ -90,7 +98,7 @@ class PizzaListContainer extends React.PureComponent {
   }
 
   displayTurboDroneCost = () => {
-      const subTotal = this.props.userPizza.totalCost
+      const subTotal = this.state.totalCost
       const newTotal = Number.parseFloat(subTotal * 1.1).toFixed(2)
       this.setState({
         total: newTotal
@@ -109,6 +117,7 @@ class PizzaListContainer extends React.PureComponent {
         <UserPizza calculateTotalCost={this.calculateTotalCost}
         base={this.state.base} />
         <Checkout userPizza={this.props.userPizza}
+        totalCost={this.state.totalCost}
         turboDroneCost={this.turboDroneCost}
         displayTurboDroneCost={this.displayTurboDroneCost}
         total={this.state.total}/>
